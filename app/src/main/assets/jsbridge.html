@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width; user-scalable=0;" />
+    <title>Webview</title>
+
+    <h1>JS Bridge</h1>
+</head>
+<body>
+<input type="button" value="Call Function"
+       onClick="showAndroidToast('Welcome!')" />
+
+<script language="javascript">
+  function showAndroidToast(toast) {
+   JB.showToast(toast);
+ }
+</script>
+
+</body>
+</html>
