@@ -2,17 +2,17 @@ package com.sayone.androidjsbridge;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
+import android.webkit.HttpAuthHandler;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class ActivityWebViewInteraction extends AppCompatActivity {
     WebView webView;
 
     @Override
@@ -33,30 +33,19 @@ public class MainActivity extends Activity {
                     MyActivity.setTitle("Android JS Bridge");
             }
         });
-        webView.setWebViewClient(new WebViewClient());
-        webView.addJavascriptInterface(new WebAppInterface(this), "JB");
-
-
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("file:///android_asset/jsbridge.html");
+        webView.loadUrl("https://cvs-s.shopcurbside.com/");
+        webView.setWebViewClient(new CustomWebViewClient());
 
     }
 
-    public class WebAppInterface {
+    private class CustomWebViewClient extends WebViewClient {
+        @Override
+        public void onReceivedHttpAuthRequest(WebView view,
+                                              HttpAuthHandler handler, String host, String realm) {
 
-        Context context;
+            handler.proceed("curbside", "curbside");
 
-        WebAppInterface(Context c) {
-            context= c;
         }
-
-        @JavascriptInterface
-        public void showToast(String toast) {
-            Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(context,ActivityWebViewInteraction.class);
-            startActivity(intent);
-        }
-
     }
 
 }
